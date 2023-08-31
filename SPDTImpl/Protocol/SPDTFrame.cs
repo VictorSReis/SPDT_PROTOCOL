@@ -14,7 +14,7 @@ public sealed class SPDTFrame : ISPDTFrame
 
     public UInt24 FrameLenght { get; private set; }
 
-    public Memory<byte> FramePayload { get; private set; }
+    public ReadOnlyMemory<byte> FramePayload { get; private set; }
     #endregion
 
     #region FRAME MEMORY

@@ -2,7 +2,7 @@
 using SPDTCore.Core.Protocol;
 using SPDTCore.Core.Stream;
 
-namespace SPDTImpl;
+namespace SPDTImpl.Stream;
 
 /// <summary>
 /// Implementação default da interface <see cref="ISPDTStreamMessages"/>.

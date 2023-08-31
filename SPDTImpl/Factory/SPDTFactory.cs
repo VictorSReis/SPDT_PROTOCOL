@@ -1,7 +1,9 @@
 ﻿using SPDTCore.Core;
 using SPDTCore.Core.Factory;
 using SPDTCore.Core.Protocol;
+using SPDTCore.Core.Stream;
 using SPDTImpl.Protocol;
+using SPDTImpl.Stream;
 
 namespace SPDTImpl.Factory;
 
@@ -34,6 +36,18 @@ public sealed class SPDTFactory : ISPDTFactory
     {
         var SpdtHeader = new SPDTHeader(_SPDTGlobalObjects);
         return SpdtHeader;
+    }
+
+    public ISPDTStreamManager CreateStreamManager()
+    {
+        var SpdtStreamManager = new SPDTStreamManager();
+        return SpdtStreamManager;
+    }
+
+    public ISPDTStreamMessages CreateStreamMessages()
+    {
+        var SpdtStreamMessages = new SPDTStreamMessages();
+        return SpdtStreamMessages;
     }
     #endregion
 }

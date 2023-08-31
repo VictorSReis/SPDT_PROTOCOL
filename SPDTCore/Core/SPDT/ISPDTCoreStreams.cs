@@ -1,4 +1,5 @@
 ﻿using SPDTCore.Core.Protocol;
+using SPDTSdk;
 
 namespace SPDTCore.Core.SPDT;
 
@@ -9,13 +10,33 @@ public interface ISPDTCoreStreams
 {
     public UInt16 MaximumStreams { get; }
 
-    public UInt16 SizeStream { get; }
 
-
-
+    /// <summary>
+    /// Cria todos os recursos necessários.
+    /// </summary>
+    /// <param name="pMaximumStreams">A quantiade maximas de streams.</param>
     public void CreateSPDTCoreStream
-        (UInt16 pMaximumStreams, UInt16 pMaximumSizeStream);
+        (UInt16 pMaximumStreams);
 
-    public ISPDTStream CreateStream()
+    /// <summary>
+    /// Cria um novo fluxo, mais não regista.
+    /// </summary>
+    /// <param name="pStreamID">O ID para este novo fluxo.</param>
+    /// <param name="pStreamState">O estado para o fluxo.</param>
+    /// <returns></returns>
+    public ISPDTStream CreateStream
+        (UInt16 pStreamID, SPDTStreamState pStreamState);
+
+    /// <summary>
+    /// Registra um novo fluxo no sistema.
+    /// </summary>
+    /// <param name="pStream">O fluxo a ser registrado.</param>
+    public void RegisterStream(ISPDTStream pStream);
+
+    /// <summary>
+    /// Retorna a quantidade de stream atualmente em uso.
+    /// </summary>
+    /// <returns></returns>
+    public UInt16 GetCountStreams();
     
 }

@@ -1,6 +1,5 @@
 ﻿using SPDTCore.Core.Stream;
 using SPDTSdk;
-using System;
 
 namespace SPDTCore.Core.Protocol;
 
@@ -25,7 +24,4 @@ public interface ISPDTStream
     /// Contém informações de estatisticas sobre o fluxo atual.
     /// </summary>
     public ISPDTStreamStatistics StreamStatistics { get; }
-
-
-
 }

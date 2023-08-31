@@ -8,7 +8,7 @@ namespace SPDTCore.Core.Readers;
 /// </summary>
 public interface ISPDTReaderStream
 {
-    public bool Read(Stream pStreamData, out Memory<byte> pOutBufferSDPTPaket);
+    public bool Read(System.IO.Stream pStreamData, out Memory<byte> pOutBufferSDPTPaket);
 
     public bool ReadFromSocket(Socket pSocket, out Memory<byte> pOutBufferSPDTPacket);
 }

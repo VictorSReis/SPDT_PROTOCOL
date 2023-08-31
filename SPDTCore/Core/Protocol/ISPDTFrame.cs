@@ -8,10 +8,11 @@ public interface ISPDTFrame
 
     public UInt24 FrameLenght { get; }
 
-    public Memory<byte> FramePayload { get; }
+    public ReadOnlyMemory<byte> FramePayload { get; }
 
 
-    public void LoadFrameProtocol(Memory<byte> pBufferFrame);
+    public void LoadFrameProtocol
+        (Memory<byte> pBufferFrame);
 
     public void ResetFrame();
 }

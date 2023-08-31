@@ -9,6 +9,11 @@ namespace SPDTSdk;
 public enum SPDTStreamState: byte
 {
     /// <summary>
+    /// O fluxo foi ciado.
+    /// </summary>
+    STREAM_CREATED,
+
+    /// <summary>
     /// O fluxo está aberto.
     /// </summary>
     STREAM_OPEN,
