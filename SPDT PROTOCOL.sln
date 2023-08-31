@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34018.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPDTCore", "SPDTCore\SPDTCore.csproj", "{E3D9E4F7-FF97-4AE7-B265-65983BC48AA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPDTSdk", "SPDTSdk\SPDTSdk.csproj", "{D1E0C507-7EBB-4878-A9E9-CE15E870635D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPDTImpl", "SPDTImpl\SPDTImpl.csproj", "{EFF682B7-155C-4A9C-A880-F119633AAB2B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E3D9E4F7-FF97-4AE7-B265-65983BC48AA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3D9E4F7-FF97-4AE7-B265-65983BC48AA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3D9E4F7-FF97-4AE7-B265-65983BC48AA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3D9E4F7-FF97-4AE7-B265-65983BC48AA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1E0C507-7EBB-4878-A9E9-CE15E870635D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1E0C507-7EBB-4878-A9E9-CE15E870635D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1E0C507-7EBB-4878-A9E9-CE15E870635D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1E0C507-7EBB-4878-A9E9-CE15E870635D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFF682B7-155C-4A9C-A880-F119633AAB2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFF682B7-155C-4A9C-A880-F119633AAB2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFF682B7-155C-4A9C-A880-F119633AAB2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFF682B7-155C-4A9C-A880-F119633AAB2B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {79194124-7CCE-4F40-976B-967B264E3D8F}
+	EndGlobalSection
+EndGlobal
