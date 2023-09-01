@@ -39,7 +39,7 @@ public sealed class SPDTProtocolHeaderWriter : ISPDTProtocolHeaderWriter
         BitWriter.WriterUInt32BigEndian(pBufferHeader.Span[7..], pFragmentID);
     }
 
-    public void WriterPayloadLenght
+    public void WritePayloadLenght
         (UInt24 pPayloadLenght, Memory<byte> pBufferHeader)
     {
         BitWriter.WriterUInt24BigEndian(pBufferHeader.Span[11..], pPayloadLenght);

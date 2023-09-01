@@ -46,6 +46,10 @@ internal sealed class SPDTCoreProcessPacketType : ISPDTCoreProcessPacketType
                 _SpdtCoreController.Invoke_ProcessInputCreateNewStream(StreamID);
                 break;
 
+            case SPDTSdk.SPDTPacketType.PACKET_TP_STREAM_CREATED_SUCESSFULLY:
+                _SpdtCoreController.Invoke_ProcessInputStreamCreatedSuccessfully(StreamID);
+                break;
+
             case SPDTSdk.SPDTPacketType.PACKET_TP_CLOSE_STREAM:
                 _SpdtCoreController.Invoke_ProcessInputCloseStream(StreamID);
                 break;

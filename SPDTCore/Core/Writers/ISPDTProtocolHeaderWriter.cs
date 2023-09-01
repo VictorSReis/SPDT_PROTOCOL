@@ -16,6 +16,6 @@ public interface ISPDTProtocolHeaderWriter
     public void WriteFragmentID
         (UInt32 pFragmentID, Memory<Byte> pBufferHeader);
 
-    public void WriterPayloadLenght
-        (UInt24 pPayloadLenght, Memory<byte> pBufferHeader)
+    public void WritePayloadLenght
+        (UInt24 pPayloadLenght, Memory<byte> pBufferHeader);
 }

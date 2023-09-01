@@ -14,26 +14,26 @@ public sealed class SPDTProtocolFrameWriter : ISPDTProtocolFrameWriter
      */
 
 
-    public void WriterFrameType
+    public void WriteFrameType
         (SPDTFrameType pSPDTFrameType, Memory<byte> pBufferFrame)
     {
         pBufferFrame.Span[0] = (byte)pSPDTFrameType;
     }
 
-    public void WriterFrameLenght
+    public void WriteFrameLenght
         (UInt24 pFrameLenght, Memory<byte> pBufferFrame)
     {
         BitWriter.WriterUInt24BigEndian(pBufferFrame.Span[1..], pFrameLenght);
     }
 
-    public void WriterFramePayload
+    public void WriteFramePayload
         (Memory<byte> pFramePayload, Memory<byte> pBufferFrame)
     {
         var Destination = pBufferFrame.Span[4..];
         pFramePayload.Span.CopyTo(Destination);
     }
 
-    public void WriterFramePayload
+    public void WriteFramePayload
         (Span<byte> pFramePayload, Memory<byte> pBufferFrame)
     {
         var Destination = pBufferFrame.Span[4..];

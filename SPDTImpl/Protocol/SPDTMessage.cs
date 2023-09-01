@@ -40,17 +40,21 @@ public sealed class SPDTMessage : ISPDTMessage
     }
 
     public void AssembleMessage
-        (Memory<byte> pBufferMessage)
+        (Memory<byte> pBufferMessage, bool pFramePayloadPresent)
     {
         //SET MEMORY OBJECT THIS MESSAGE
         _MemoryMessageObject = pBufferMessage;
 
+        //WRITE HEADER
         var MemHeader = _MemoryMessageObject[..(SPDTConstants.SIZE_HEADER_OBJECT - 1)];
-        var MemFrame = _MemoryMessageObject[SPDTConstants.SIZE_HEADER_OBJECT..];
-
-        //LOAD
         Header.LoadProtocolHeader(MemHeader);
-        Frame.LoadFrameProtocol(MemFrame);
+
+        //WRITE FRAME IF PRESENT
+        if (pFramePayloadPresent)
+        {
+            var MemFrame = _MemoryMessageObject[SPDTConstants.SIZE_HEADER_OBJECT..];
+            Frame.LoadFrameProtocol(MemFrame);
+        }
     }
 
     public void ResetMessage()

@@ -12,4 +12,6 @@ public interface ISPDTCore
     public void Initialize();
 
     public void ProcessInput(Memory<byte> pSpdtPacket);
+
+    public ISPDTCoreMessageCreator GetMessageCreator();
 }

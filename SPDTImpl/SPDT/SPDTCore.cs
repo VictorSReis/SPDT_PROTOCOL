@@ -8,7 +8,10 @@ using System.Diagnostics;
 
 namespace SPDTImpl.SPDT;
 
-public sealed class SPDTCore
+/// <summary>
+/// Implementação default do protocolo SPDT.
+/// </summary>
+public sealed class SPDTCore: ISPDTCore
 {
 	#region PRIVATE RESOURCES
 	private ISPDTGlobalObjects _SpdtGlobalObjects;
@@ -18,6 +21,7 @@ public sealed class SPDTCore
 	private ISPDTCoreStreamGenerateID _SpdtStreamGenerateID;
 	private ISPDTCoreController _SpdtCoreController;
     private ISPDTCoreProcessPacketType _SpdtProcessPacketType;
+    private ISPDTCoreMessageCreator _SpdtCoreMessageCreator;
     #endregion
 
     #region PROCESS
@@ -47,10 +51,11 @@ public sealed class SPDTCore
         _SpdtStreamGenerateID = new SPDTCoreStreamGenerateID();
         _SpdtCoreController = new SPDTCoreController();
         _SpdtProcessPacketType = new SPDTCoreProcessPacketType(_SpdtCoreController);
+        _SpdtCoreMessageCreator = new SPDTCoreMessageCreator(_SpdtGlobalObjects, _SpdtStreamGenerateID);
 
         //CREATE PROCESS INPUT
         _SpdtCoreForwarderMessage = new SPDTCoreForwarderMessage(_SpdtCoreStreams);
-        _SpdtCoreProcessInput = new SPDTCoreProcessInput(_SpdtCoreController, _SpdtGlobalObjects, _SpdtCoreForwarderMessage);
+        _SpdtCoreProcessInput = new SPDTCoreProcessInput(_SpdtCoreController, _SpdtGlobalObjects, _SpdtProcessPacketType);
     }
 
     public void Initialize()
@@ -66,6 +71,7 @@ public sealed class SPDTCore
         _SpdtCoreController.OnNotifyProcessInputResetStream += _SpdtCoreController_OnNotifyProcessInputResetStream;
         _SpdtCoreController.OnNotifyProcessInputCloseStream += _SpdtCoreController_OnNotifyProcessInputCloseStream;
         _SpdtCoreController.OnNotifyProcessInputPingStream += _SpdtCoreController_OnNotifyProcessInputPingStream;
+        _SpdtCoreController.OnNotifyProcessInputStreamCreatedSuccessfully += _SpdtCoreController_OnNotifyProcessInputStreamCreatedSuccessfully;
 
         //INITIALIZE PROCESS INPUT
         _SpdtCoreProcessInput.Start();
@@ -74,6 +80,11 @@ public sealed class SPDTCore
     public void ProcessInput(Memory<byte> pSpdtPacket)
     {
         _SpdtCoreProcessInput.ProcessInput(pSpdtPacket);
+    }
+
+    public ISPDTCoreMessageCreator GetMessageCreator()
+    {
+        return _SpdtCoreMessageCreator;
     }
     #endregion
 
@@ -119,7 +130,30 @@ public sealed class SPDTCore
         StreamManager.InvokeResetStream();
     }
 
+
     private void _SpdtCoreController_OnNotifyProcessInputCreateNewStream
+        (object sender, uint e)
+    {
+        try
+        {
+            //CREATE STREAM
+            var NewStreamItem = _SpdtCoreStreams.CreateStream
+                (e, SPDTSdk.SPDTStreamState.STREAM_CREATED);
+
+            //REGISTER
+            _SpdtCoreStreams.RegisterStream(NewStreamItem);
+
+            //UPDATE STATE
+            NewStreamItem.SpdtStreamManager.InvokeUpdateStreamState
+                (SPDTSdk.SPDTStreamState.STREAM_OPEN);
+        }
+        catch (Exception Er)
+        {
+            Debug.WriteLine($"DEBUG: Exception in create new stream id({e}): Message > {Er.GetType().Name}:{Er.Message}");
+        }
+    }
+
+    private void _SpdtCoreController_OnNotifyProcessInputStreamCreatedSuccessfully
         (object sender, uint e)
     {
         try

@@ -23,23 +23,27 @@ public enum SPDTPacketType : byte
     /// <summary>
     /// Pacote informando a criação de um fluxo.
     /// </summary>
-    PACKET_TP_CREATE_STREAM = 0x1,
+    PACKET_TP_CREATE_STREAM,
+
+    /// <summary>
+    /// Pacote informando que o fluxo foi criado com sucesso.
+    /// </summary>
+    PACKET_TP_STREAM_CREATED_SUCESSFULLY,
 
     /// <summary>
     /// Pacote solicitando o fechamento do fluxo.
     /// </summary>
-    PACKET_TP_CLOSE_STREAM = 0x2,
+    PACKET_TP_CLOSE_STREAM,
 
     /// <summary>
     /// Pacote solicitando que o fluxo seja resetado.
     /// </summary>
-    PACKET_TP_RESET_STREAM = 0x3,
+    PACKET_TP_RESET_STREAM,
 
     /// <summary>
     /// Pacote utilizado para manter vivo um fluxo.
     /// </summary>
-    PACKET_TP_PING_STREAM = 0x4,
-
+    PACKET_TP_PING_STREAM,
 
     /// <summary>
     /// Pacote de ping para avaliar a conexão com o endpoint final.

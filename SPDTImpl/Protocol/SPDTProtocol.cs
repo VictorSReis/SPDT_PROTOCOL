@@ -101,34 +101,34 @@ public sealed class SPDTProtocol : ISPDTProtocol
         _HeaderWriter.WriteProtocolVersion(pProtocolVersion, pBufferHeader);
     }
 
-    public void WriterPayloadLenght
+    public void WritePayloadLenght
         (UInt24 pPayloadLenght, Memory<byte> pBufferHeader)
     {
-        _HeaderWriter.WriterPayloadLenght(pPayloadLenght, pBufferHeader);
+        _HeaderWriter.WritePayloadLenght(pPayloadLenght, pBufferHeader);
     }
 
-    public void WriterFrameLenght
+    public void WriteFrameLenght
         (UInt24 pFrameLenght, Memory<byte> pBufferFrame)
     {
-       _FrameWriter.WriterFrameLenght(pFrameLenght, pBufferFrame);
+       _FrameWriter.WriteFrameLenght(pFrameLenght, pBufferFrame);
     }
 
-    public void WriterFramePayload
+    public void WriteFramePayload
         (Memory<byte> pFramePayload, Memory<byte> pBufferFrame)
     {
-        _FrameWriter.WriterFramePayload(pFramePayload, pBufferFrame);   
+        _FrameWriter.WriteFramePayload(pFramePayload, pBufferFrame);   
     }
 
-    public void WriterFramePayload
+    public void WriteFramePayload
         (Span<byte> pFramePayload, Memory<byte> pBufferFrame)
     {
-        _FrameWriter.WriterFramePayload(pFramePayload, pBufferFrame);
+        _FrameWriter.WriteFramePayload(pFramePayload, pBufferFrame);
     }
 
-    public void WriterFrameType
+    public void WriteFrameType
         (SPDTFrameType pSPDTFrameType, Memory<byte> pBufferFrame)
     {
-        _FrameWriter.WriterFrameType(pSPDTFrameType, pBufferFrame);
+        _FrameWriter.WriteFrameType(pSPDTFrameType, pBufferFrame);
     }
 
     public void WriteStreamID

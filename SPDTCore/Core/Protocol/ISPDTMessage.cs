@@ -11,7 +11,8 @@ public interface ISPDTMessage
 
     public void CreateMessage();
 
-    public void AssembleMessage(Memory<byte> pBufferMessage);
+    public void AssembleMessage
+        (Memory<byte> pBufferMessage, bool pFramePayloadPresent);
 
     public void ResetMessage();
 
