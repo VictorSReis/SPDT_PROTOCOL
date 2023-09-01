@@ -14,4 +14,6 @@ public interface ISPDTCore
     public void ProcessInput(Memory<byte> pSpdtPacket);
 
     public ISPDTCoreMessageCreator GetMessageCreator();
+
+    public ISPDTCoreForwardEndpoint GetForwardEndpoint();
 }

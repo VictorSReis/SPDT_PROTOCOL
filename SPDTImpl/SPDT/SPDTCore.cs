@@ -90,6 +90,11 @@ public sealed class SPDTCore: ISPDTCore
     {
         return _SpdtCoreMessageCreator;
     }
+
+    public ISPDTCoreForwardEndpoint GetForwardEndpoint()
+    {
+        return _SpdtCoreForwardEndpoint;
+    }
     #endregion
 
     #region EVENTS CORE CONTROLLER
@@ -134,10 +139,11 @@ public sealed class SPDTCore: ISPDTCore
         StreamManager.InvokeResetStream();
     }
 
-
     private void _SpdtCoreController_OnNotifyProcessInputCreateNewStream
         (object sender, uint e)
     {
+        Debug.WriteLine($"DEBUG: Request create new stream id: {e}");
+
         try
         {
             //CREATE STREAM
@@ -150,6 +156,9 @@ public sealed class SPDTCore: ISPDTCore
             //UPDATE STATE
             NewStreamItem.SpdtStreamManager.InvokeUpdateStreamState
                 (SPDTSdk.SPDTStreamState.STREAM_OPEN);
+
+            //Notify Endpoint for created stream.
+            PrivateNotifyEndpointStreamCreated(e);
         }
         catch (Exception Er)
         {
@@ -160,6 +169,8 @@ public sealed class SPDTCore: ISPDTCore
     private void _SpdtCoreController_OnNotifyProcessInputStreamCreatedSuccessfully
         (object sender, uint e)
     {
+        Debug.WriteLine($"DEBUG: Endpoint notify stream created successfully: {e}");
+
         try
         {
             //CREATE STREAM
@@ -181,6 +192,10 @@ public sealed class SPDTCore: ISPDTCore
     #endregion
 
     #region PRIVATE
-
+    private void PrivateNotifyEndpointStreamCreated(UInt32 pStreamIDCreated)
+    {
+        var MessageForward = _SpdtCoreMessageCreator.CreateMessage_CreatedStreamSuccessfully(pStreamIDCreated);
+        _SpdtNotifyForwardMessageHandle?.Invoke(MessageForward);
+    }
     #endregion
 }

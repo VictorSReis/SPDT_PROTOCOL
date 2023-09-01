@@ -3,9 +3,15 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SPDTCore\SPDTCore.csproj" />
+    <ProjectReference Include="..\SPDTImpl\SPDTImpl.csproj" />
+    <ProjectReference Include="..\SPDTSdk\SPDTSdk.csproj" />
+  </ItemGroup>
 
 </Project>

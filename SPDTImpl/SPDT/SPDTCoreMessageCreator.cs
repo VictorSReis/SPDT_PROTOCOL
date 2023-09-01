@@ -60,9 +60,7 @@ internal sealed class SPDTCoreMessageCreator : ISPDTCoreMessageCreator
     private static Memory<byte> CreateBufferMemory(int pSize)
     {
         Memory<byte> BufferCreated = default;
-
-
-
+        BufferCreated = new byte[pSize];
         return BufferCreated;
     }
 
