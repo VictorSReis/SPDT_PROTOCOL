@@ -1,6 +1,7 @@
 ﻿using SPDTCore.Core;
 using SPDTCore.Core.Protocol;
 using SPDTCore.Core.SPDT;
+using System.Diagnostics;
 
 namespace SPDTImpl.SPDT;
 
@@ -9,6 +10,7 @@ public sealed class SPDTCoreProcessInput : ISPDTCoreProcessInput
     #region PRIVATE VALUES
     private ISPDTCoreController _SpdtCoreController;
     private ISPDTGlobalObjects _pSpdtGlobalObjects;
+    private ISPDTCoreProcessPacketType _SpdtProcessPacketType;
     private Queue<Memory<byte>> _QueueMemorySpdt;
     private Task _TaskOperationProcessInput;
     private bool _PermissionWhile;
@@ -16,11 +18,14 @@ public sealed class SPDTCoreProcessInput : ISPDTCoreProcessInput
 
 
     #region CONSTRUCTOR
-    internal SPDTCoreProcessInput
-        (ISPDTCoreController pSpdtCoreController, ISPDTGlobalObjects pSpdtGlobalObjects)
+    internal SPDTCoreProcessInput(
+        ISPDTCoreController pSpdtCoreController, 
+        ISPDTGlobalObjects pSpdtGlobalObjects,
+        ISPDTCoreProcessPacketType pSpdtProcessPacketType)
     {
         _SpdtCoreController = pSpdtCoreController;
         _pSpdtGlobalObjects = pSpdtGlobalObjects;
+        _SpdtProcessPacketType = pSpdtProcessPacketType;
         _QueueMemorySpdt = new Queue<Memory<byte>>(10);
         _PermissionWhile = true;
     }
@@ -31,7 +36,7 @@ public sealed class SPDTCoreProcessInput : ISPDTCoreProcessInput
         (Memory<byte> pSPDTPacket)
     {
         _QueueMemorySpdt.Enqueue(pSPDTPacket);
-        _SpdtCoreController.Invoke_ProcessInput_NewData();
+        _SpdtCoreController.Invoke_ProcessInputNewData();
     }
 
     public void Start()
@@ -56,21 +61,25 @@ public sealed class SPDTCoreProcessInput : ISPDTCoreProcessInput
                 goto Done;
 
             //GET PACKET FOR PROCESS
-            var PacketForProcess = PrivateGetNextMemoryPacketProcess();
+            var PacketForProcess = 
+                PrivateGetNextMemoryPacketProcess();
 
             //CRATE MESSAGE OBJECT
-            var NewSpdtMessageObject = PrivateCreateNewMessageObject();
+            var NewSpdtMessageObject = 
+                PrivateCreateNewMessageObject();
 
             //ASSEMBLE MESSAGE
             bool ResultAssembleMsg = PrivateAssembleMessage
                 (ref NewSpdtMessageObject, PacketForProcess);
             if (!ResultAssembleMsg)
-                _SpdtCoreController.Invoke_ProcessInput_Malformed_Data();
+            {
+                _SpdtCoreController.Invoke_ProcessInputMalformedData();
+                goto Done;
+            }
 
-            //Notify new message assembled
-            _SpdtCoreController.Invoke_ProcessInput_NewMessage
-                (NewSpdtMessageObject);
-
+            //PROCESS PACKET TYPE
+            _SpdtProcessPacketType.
+                ProcessMessagePacketType(NewSpdtMessageObject);
 
             if (_QueueMemorySpdt.Count > 0)
                 goto NextProcess;

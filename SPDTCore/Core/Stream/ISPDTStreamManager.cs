@@ -14,6 +14,7 @@ public interface ISPDTStreamManager
     public event EventHandler<Guid> OnSetGuidStream;
     public event EventHandler<SPDTStreamState> OnUpdateStreamState;
     public event EventHandler<ISPDTMessage> OnNewMessage;
+    public event EventHandler OnResetStream;
 
 
     public void InvokeSetIDStream(UInt32 pIDStream);
@@ -23,4 +24,6 @@ public interface ISPDTStreamManager
     public void InvokeUpdateStreamState(SPDTStreamState pStreamState);
 
     public void InvokeNewMessage(ISPDTMessage pNewMessage);
+
+    public void InvokeResetStream();
 }

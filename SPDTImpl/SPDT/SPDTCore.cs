@@ -17,10 +17,11 @@ public sealed class SPDTCore
 	private ISPDTCoreStreams _SpdtCoreStreams;
 	private ISPDTCoreStreamGenerateID _SpdtStreamGenerateID;
 	private ISPDTCoreController _SpdtCoreController;
-	#endregion
+    private ISPDTCoreProcessPacketType _SpdtProcessPacketType;
+    #endregion
 
-	#region PROCESS
-	private ISPDTCoreProcessInput _SpdtCoreProcessInput;
+    #region PROCESS
+    private ISPDTCoreProcessInput _SpdtCoreProcessInput;
     private ISPDTCoreForwarderMessage _SpdtCoreForwarderMessage;
     #endregion
 
@@ -45,10 +46,11 @@ public sealed class SPDTCore
         _SpdtCoreStreams = new SPDTCoreStreams(_SpdtGlobalObjects);
         _SpdtStreamGenerateID = new SPDTCoreStreamGenerateID();
         _SpdtCoreController = new SPDTCoreController();
+        _SpdtProcessPacketType = new SPDTCoreProcessPacketType(_SpdtCoreController);
 
         //CREATE PROCESS INPUT
-        _SpdtCoreProcessInput = new SPDTCoreProcessInput(_SpdtCoreController, _SpdtGlobalObjects);
         _SpdtCoreForwarderMessage = new SPDTCoreForwarderMessage(_SpdtCoreStreams);
+        _SpdtCoreProcessInput = new SPDTCoreProcessInput(_SpdtCoreController, _SpdtGlobalObjects, _SpdtCoreForwarderMessage);
     }
 
     public void Initialize()
@@ -60,6 +62,10 @@ public sealed class SPDTCore
         _SpdtCoreController.OnNotifyProcessInputMalformedData += _SpdtCoreController_OnNotifyProcessInputMalformedData;
         _SpdtCoreController.OnNotifyProcessInputNewData += _SpdtCoreController_OnNotifyProcessInputNewData;
         _SpdtCoreController.OnNotifyProcessInputNewMessage += _SpdtCoreController_OnNotifyProcessInputNewMessage;
+        _SpdtCoreController.OnNotifyProcessInputCreateNewStream += _SpdtCoreController_OnNotifyProcessInputCreateNewStream;
+        _SpdtCoreController.OnNotifyProcessInputResetStream += _SpdtCoreController_OnNotifyProcessInputResetStream;
+        _SpdtCoreController.OnNotifyProcessInputCloseStream += _SpdtCoreController_OnNotifyProcessInputCloseStream;
+        _SpdtCoreController.OnNotifyProcessInputPingStream += _SpdtCoreController_OnNotifyProcessInputPingStream;
 
         //INITIALIZE PROCESS INPUT
         _SpdtCoreProcessInput.Start();
@@ -72,20 +78,67 @@ public sealed class SPDTCore
     #endregion
 
     #region EVENTS CORE CONTROLLER
-    private void _SpdtCoreController_OnNotifyProcessInputNewMessage(object sender, ISPDTMessage e)
+    private void _SpdtCoreController_OnNotifyProcessInputNewMessage
+        (object sender, ISPDTMessage e)
     {
         Debug.WriteLine($"DEBUG: New Message Stream ID: {e.Header.StreamID}");
         _SpdtCoreForwarderMessage.Forwarder(e);
     }
 
-    private void _SpdtCoreController_OnNotifyProcessInputNewData(object sender, EventArgs e)
+    private void _SpdtCoreController_OnNotifyProcessInputNewData
+        (object sender, EventArgs e)
     {
         Debug.WriteLine($"DEBUG: New input data");
     }
 
-    private void _SpdtCoreController_OnNotifyProcessInputMalformedData(object sender, EventArgs e)
+    private void _SpdtCoreController_OnNotifyProcessInputMalformedData
+        (object sender, EventArgs e)
     {
         Debug.WriteLine($"DEBUG: Malformed Packet");
+    }
+
+    private void _SpdtCoreController_OnNotifyProcessInputPingStream
+        (object sender, uint e)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void _SpdtCoreController_OnNotifyProcessInputCloseStream
+        (object sender, uint e)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void _SpdtCoreController_OnNotifyProcessInputResetStream
+        (object sender, uint e)
+    {
+        var StreamManager = _SpdtCoreStreams.GetStreamManagerByID(e);
+        if (StreamManager is null)
+            return;
+
+        StreamManager.InvokeResetStream();
+    }
+
+    private void _SpdtCoreController_OnNotifyProcessInputCreateNewStream
+        (object sender, uint e)
+    {
+        try
+        {
+            //CREATE STREAM
+            var NewStreamItem = _SpdtCoreStreams.CreateStream
+                (e, SPDTSdk.SPDTStreamState.STREAM_CREATED);
+
+            //REGISTER
+            _SpdtCoreStreams.RegisterStream(NewStreamItem);
+
+            //UPDATE STATE
+            NewStreamItem.SpdtStreamManager.InvokeUpdateStreamState
+                (SPDTSdk.SPDTStreamState.STREAM_OPEN);
+        }
+        catch (Exception Er)
+        {
+            Debug.WriteLine($"DEBUG: Exception in create new stream id({e}): Message > {Er.GetType().Name}:{Er.Message}");
+        }
     }
     #endregion
 

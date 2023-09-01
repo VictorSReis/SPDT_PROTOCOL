@@ -21,7 +21,7 @@ public sealed class SPDTStream : ISPDTStream
     #endregion
 
     #region PRIVATE OBJECTS STREAM
-    private ISPDTStreamMessages _StreamMensages;
+    private ISPDTStreamMessages _StreamMessages;
     #endregion
 
 
@@ -30,25 +30,26 @@ public sealed class SPDTStream : ISPDTStream
         (ISPDTStreamManager pStreamManager, ISPDTStreamMessages pStreamMessages)
     {
         _StreamManager = pStreamManager;
-        _StreamMensages = pStreamMessages;
+        _StreamMessages = pStreamMessages;
 
         //LOAD EVENT STREAM MANAGER
         _StreamManager.OnSetIDStream += StreamManager_OnSetIDStream;
         _StreamManager.OnSetGuidStream += StreamManager_OnSetGuidStream;
         _StreamManager.OnUpdateStreamState += StreamManager_OnUpdateStreamState;
         _StreamManager.OnNewMessage += StreamManager_OnNewMessage;
+        _StreamManager.OnResetStream += _StreamManager_OnResetStream;
     }
     #endregion
 
     #region ISPDTStream
     public bool AvailebleData()
     {
-        throw new NotImplementedException();
+        return _StreamMessages.MessageAvaileble();
     }
 
     public ISPDTMessage GetSPDTMessage()
     {
-        throw new NotImplementedException();
+        return _StreamMessages.GetNextMessage();
     }
     #endregion
 
@@ -74,8 +75,12 @@ public sealed class SPDTStream : ISPDTStream
     private void StreamManager_OnNewMessage
         (object sender, ISPDTMessage e)
     {
-        _StreamMensages.EnqueueMessage(e);
+        _StreamMessages.EnqueueMessage(e);
     }
 
+    private void _StreamManager_OnResetStream(object sender, EventArgs e)
+    {
+        throw new NotImplementedException();
+    }
     #endregion
 }
