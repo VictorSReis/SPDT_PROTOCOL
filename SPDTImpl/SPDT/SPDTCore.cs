@@ -1,5 +1,6 @@
 ﻿using SPDTCore.Core;
 using SPDTCore.Core.Factory;
+using SPDTCore.Core.Handles;
 using SPDTCore.Core.Protocol;
 using SPDTCore.Core.SPDT;
 using SPDTImpl.Factory;
@@ -27,6 +28,8 @@ public sealed class SPDTCore: ISPDTCore
     #region PROCESS
     private ISPDTCoreProcessInput _SpdtCoreProcessInput;
     private ISPDTCoreForwarderMessage _SpdtCoreForwarderMessage;
+    private ISPDTCoreForwardEndpoint _SpdtCoreForwardEndpoint;
+    private SPDTCoreHandles.NotifyUserForwardMessageHandle _SpdtNotifyForwardMessageHandle;
     #endregion
 
 
@@ -52,6 +55,7 @@ public sealed class SPDTCore: ISPDTCore
         _SpdtCoreController = new SPDTCoreController();
         _SpdtProcessPacketType = new SPDTCoreProcessPacketType(_SpdtCoreController);
         _SpdtCoreMessageCreator = new SPDTCoreMessageCreator(_SpdtGlobalObjects, _SpdtStreamGenerateID);
+        _SpdtCoreForwardEndpoint = new SPDTCoreForwardEndpoint(ref _SpdtNotifyForwardMessageHandle);
 
         //CREATE PROCESS INPUT
         _SpdtCoreForwarderMessage = new SPDTCoreForwarderMessage(_SpdtCoreStreams);

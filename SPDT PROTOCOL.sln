@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPDTCore", "SPDTCore\SPDTCore.csproj", "{E3D9E4F7-FF97-4AE7-B265-65983BC48AA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SPDTCore", "SPDTCore\SPDTCore.csproj", "{E3D9E4F7-FF97-4AE7-B265-65983BC48AA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPDTSdk", "SPDTSdk\SPDTSdk.csproj", "{D1E0C507-7EBB-4878-A9E9-CE15E870635D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SPDTSdk", "SPDTSdk\SPDTSdk.csproj", "{D1E0C507-7EBB-4878-A9E9-CE15E870635D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPDTImpl", "SPDTImpl\SPDTImpl.csproj", "{EFF682B7-155C-4A9C-A880-F119633AAB2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SPDTImpl", "SPDTImpl\SPDTImpl.csproj", "{EFF682B7-155C-4A9C-A880-F119633AAB2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPDTProtocolTeste", "SPDTProtocolTeste\SPDTProtocolTeste.csproj", "{ACBFBE7A-95A6-424A-ABE8-16D3EA55D714}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{EFF682B7-155C-4A9C-A880-F119633AAB2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFF682B7-155C-4A9C-A880-F119633AAB2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFF682B7-155C-4A9C-A880-F119633AAB2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACBFBE7A-95A6-424A-ABE8-16D3EA55D714}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACBFBE7A-95A6-424A-ABE8-16D3EA55D714}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACBFBE7A-95A6-424A-ABE8-16D3EA55D714}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACBFBE7A-95A6-424A-ABE8-16D3EA55D714}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

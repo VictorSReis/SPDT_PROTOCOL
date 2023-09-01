@@ -1,6 +1,4 @@
-﻿
-
-namespace SPDTCore.Core.SPDT;
+﻿namespace SPDTCore.Core.SPDT;
 
 /// <summary>
 /// Interface utilizada pelo cliente para receber mensagens que devem ser encaminhadas para o endpoint.
