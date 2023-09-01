@@ -24,14 +24,21 @@ public interface ISPDTCoreStreams
     /// <param name="pStreamID">O ID para este novo fluxo.</param>
     /// <param name="pStreamState">O estado para o fluxo.</param>
     /// <returns></returns>
-    public ISPDTStream CreateStream
-        (UInt16 pStreamID, SPDTStreamState pStreamState);
+    public ISPDTCoreStreamItem CreateStream
+        (UInt32 pStreamID, SPDTStreamState pStreamState);
 
     /// <summary>
     /// Registra um novo fluxo no sistema.
     /// </summary>
     /// <param name="pStream">O fluxo a ser registrado.</param>
-    public void RegisterStream(ISPDTStream pStream);
+    public void RegisterStream(ISPDTCoreStreamItem pStreamItem);
+
+    /// <summary>
+    /// Retorna um fluxo com base no seu ID.
+    /// </summary>
+    /// <param name="pStreamID">O ID do fluxo a ser retornado.</param>
+    /// <returns></returns>
+    public ISPDTStream GetStreamID(UInt32 pStreamID);
 
     /// <summary>
     /// Retorna a quantidade de stream atualmente em uso.

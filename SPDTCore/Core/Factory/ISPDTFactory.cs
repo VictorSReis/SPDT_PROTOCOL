@@ -13,4 +13,7 @@ public interface ISPDTFactory
     public ISPDTStreamMessages CreateStreamMessages();
 
     public ISPDTStreamManager CreateStreamManager();
+
+    public ISPDTStream CreateSPDTStream
+        (ISPDTStreamManager pStreamManager, ISPDTStreamMessages pStreamMensages);
 }

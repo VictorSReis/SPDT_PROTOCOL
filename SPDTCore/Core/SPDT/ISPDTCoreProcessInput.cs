@@ -6,5 +6,9 @@
 /// </summary>
 public interface ISPDTCoreProcessInput
 {
+    public void Start();
+
     public void ProcessInput(Memory<byte> pSPDTPacket);
+
+    public void Stop();
 }

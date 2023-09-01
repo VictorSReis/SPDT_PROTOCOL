@@ -49,5 +49,12 @@ public sealed class SPDTFactory : ISPDTFactory
         var SpdtStreamMessages = new SPDTStreamMessages();
         return SpdtStreamMessages;
     }
+
+    public ISPDTStream CreateSPDTStream
+        (ISPDTStreamManager pStreamManager, ISPDTStreamMessages pStreamMensages)
+    {
+        var NewStream = new SPDTStream(pStreamManager, pStreamMensages);
+        return NewStream;
+    }
     #endregion
 }

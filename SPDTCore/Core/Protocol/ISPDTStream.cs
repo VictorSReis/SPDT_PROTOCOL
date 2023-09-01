@@ -3,6 +3,9 @@ using SPDTSdk;
 
 namespace SPDTCore.Core.Protocol;
 
+/// <summary>
+/// Representa uma linha de fluxo dentro de uma conexão.
+/// </summary>
 public interface ISPDTStream
 {
     /// <summary>
@@ -24,4 +27,17 @@ public interface ISPDTStream
     /// Contém informações de estatisticas sobre o fluxo atual.
     /// </summary>
     public ISPDTStreamStatistics StreamStatistics { get; }
+
+
+    /// <summary>
+    /// Verifica se há dados disponiveis no fluxo.
+    /// </summary>
+    /// <returns></returns>
+    public bool AvailebleData();
+
+    /// <summary>
+    /// Obtém a proxima mensagem disponivel no fluxo.
+    /// </summary>
+    /// <returns></returns>
+    public ISPDTMessage GetSPDTMessage();
 }

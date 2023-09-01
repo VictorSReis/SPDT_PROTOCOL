@@ -33,40 +33,49 @@ public sealed class SPDTStream : ISPDTStream
         _StreamMensages = pStreamMessages;
 
         //LOAD EVENT STREAM MANAGER
-        _StreamManager.OnSetIDStream += _StreamManager_OnSetIDStream;
-        _StreamManager.OnSetGuidStream += _StreamManager_OnSetGuidStream;
-        _StreamManager.OnUpdateStreamState += _StreamManager_OnUpdateStreamState;
-        _StreamManager.OnNewMessage += _StreamManager_OnNewMessage;
+        _StreamManager.OnSetIDStream += StreamManager_OnSetIDStream;
+        _StreamManager.OnSetGuidStream += StreamManager_OnSetGuidStream;
+        _StreamManager.OnUpdateStreamState += StreamManager_OnUpdateStreamState;
+        _StreamManager.OnNewMessage += StreamManager_OnNewMessage;
     }
     #endregion
 
     #region ISPDTStream
+    public bool AvailebleData()
+    {
+        throw new NotImplementedException();
+    }
 
+    public ISPDTMessage GetSPDTMessage()
+    {
+        throw new NotImplementedException();
+    }
     #endregion
 
     #region ISPDTStreamManager
-    private void _StreamManager_OnUpdateStreamState
+    private void StreamManager_OnUpdateStreamState
         (object sender, SPDTStreamState e)
     {
         StreamState = e;
     }
 
-    private void _StreamManager_OnSetGuidStream
+    private void StreamManager_OnSetGuidStream
         (object sender, Guid e)
     {
         StreamGuid = e;
     }
 
-    private void _StreamManager_OnSetIDStream
+    private void StreamManager_OnSetIDStream
         (object sender, uint e)
     {
         StreamID = e;
     }
 
-    private void _StreamManager_OnNewMessage
+    private void StreamManager_OnNewMessage
         (object sender, ISPDTMessage e)
     {
         _StreamMensages.EnqueueMessage(e);
     }
+
     #endregion
 }
