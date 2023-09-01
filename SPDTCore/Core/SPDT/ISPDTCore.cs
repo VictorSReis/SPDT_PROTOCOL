@@ -7,5 +7,9 @@ namespace SPDTCore.Core.SPDT;
 /// </summary>
 public interface ISPDTCore
 {
+    public void CreateResources();
 
+    public void Initialize();
+
+    public void ProcessInput(Memory<byte> pSpdtPacket);
 }

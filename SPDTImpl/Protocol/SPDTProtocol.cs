@@ -33,12 +33,6 @@ public sealed class SPDTProtocol : ISPDTProtocol
     #endregion
 
     #region READERS
-    public uint ReadFragmentID
-        (ReadOnlySpan<byte> pBufferHeader)
-    {
-        return _HeaderReader.ReadFragmentID(pBufferHeader);
-    }
-
     public UInt24 ReadFrameLenght
         (ReadOnlySpan<byte> pFrameBuffer)
     {
@@ -74,6 +68,18 @@ public sealed class SPDTProtocol : ISPDTProtocol
     {
         return _HeaderReader.ReadStreamID(pBufferHeader);
     }
+
+    public uint ReadFragmentID
+        (ReadOnlySpan<byte> pBufferHeader)
+    {
+        return _HeaderReader.ReadFragmentID(pBufferHeader);
+    }
+
+
+    public UInt24 ReadPayloadLenght(ReadOnlySpan<byte> pBufferHeader)
+    {
+        return _HeaderReader.ReadPayloadLenght(pBufferHeader);
+    }
     #endregion
 
     #region WRITERS
@@ -93,6 +99,12 @@ public sealed class SPDTProtocol : ISPDTProtocol
         (SPDTProtocolVersion pProtocolVersion, Memory<byte> pBufferHeader)
     {
         _HeaderWriter.WriteProtocolVersion(pProtocolVersion, pBufferHeader);
+    }
+
+    public void WriterPayloadLenght
+        (UInt24 pPayloadLenght, Memory<byte> pBufferHeader)
+    {
+        _HeaderWriter.WriterPayloadLenght(pPayloadLenght, pBufferHeader);
     }
 
     public void WriterFrameLenght

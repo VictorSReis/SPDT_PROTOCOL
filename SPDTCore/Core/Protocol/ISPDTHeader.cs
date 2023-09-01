@@ -16,6 +16,7 @@ public interface ISPDTHeader
 
     public UInt32 FragmentID { get; }
 
+    public UInt24 PayloadLenght { get; }
 
 
     public void LoadProtocolHeader

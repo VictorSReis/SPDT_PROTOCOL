@@ -1,6 +1,7 @@
 ﻿using SPDTCore.Core;
 using SPDTCore.Core.Protocol;
 using SPDTCore.Core.SPDT;
+using SPDTCore.Core.Stream;
 using SPDTSdk;
 
 namespace SPDTImpl.SPDT;
@@ -70,6 +71,12 @@ public sealed class SPDTCoreStreams : ISPDTCoreStreams
         return OutStream;
     }
 
+    public ISPDTStreamManager GetStreamManagerByID(UInt32 pStreamID)
+    {
+        PrivateGetStreamManagerByID(pStreamID, out var OutStreamManager);
+        return OutStreamManager;
+    }
+
     public void RegisterStream
         (ISPDTCoreStreamItem pStreamItem)
     {
@@ -94,6 +101,20 @@ public sealed class SPDTCoreStreams : ISPDTCoreStreams
             return false;
 
         pOutStream = StreamItemGet.SpdtStream;
+
+        return true;
+    }
+
+    private bool PrivateGetStreamManagerByID
+        (UInt32 pStreamID, out ISPDTStreamManager pOutStreamManager)
+    {
+        pOutStreamManager = default;
+
+        var StreamItemGet = _CollectionStreams.Find(x => x.StreamID == pStreamID);
+        if (StreamItemGet is null)
+            return false;
+
+        pOutStreamManager = StreamItemGet.SpdtStreamManager;
 
         return true;
     }

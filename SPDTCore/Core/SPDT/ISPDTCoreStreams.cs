@@ -1,4 +1,5 @@
 ﻿using SPDTCore.Core.Protocol;
+using SPDTCore.Core.Stream;
 using SPDTSdk;
 
 namespace SPDTCore.Core.SPDT;
@@ -39,6 +40,13 @@ public interface ISPDTCoreStreams
     /// <param name="pStreamID">O ID do fluxo a ser retornado.</param>
     /// <returns></returns>
     public ISPDTStream GetStreamID(UInt32 pStreamID);
+
+    /// <summary>
+    /// Retorna o gerente de um fluxo com base no seu ID.
+    /// </summary>
+    /// <param name="pStreamID">O ID do fluxo do qual vai se obter o gerente.</param>
+    /// <returns></returns>
+    public ISPDTStreamManager GetStreamManagerByID(UInt32 pStreamID);
 
     /// <summary>
     /// Retorna a quantidade de stream atualmente em uso.

@@ -15,4 +15,7 @@ public interface ISPDTProtocolHeaderReader
 
     public UInt32 ReadFragmentID
         (ReadOnlySpan<byte> pBufferHeader);
+
+    public UInt24 ReadPayloadLenght
+       (ReadOnlySpan<byte> pBufferHeader);
 }

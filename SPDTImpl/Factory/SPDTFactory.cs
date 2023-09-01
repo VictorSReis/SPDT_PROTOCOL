@@ -38,6 +38,12 @@ public sealed class SPDTFactory : ISPDTFactory
         return SpdtHeader;
     }
 
+    public ISPDTMessage CreateMessageObject()
+    {
+        var NewMessage = new SPDTMessage(_SPDTGlobalObjects);
+        return NewMessage;
+    }
+
     public ISPDTStreamManager CreateStreamManager()
     {
         var SpdtStreamManager = new SPDTStreamManager();

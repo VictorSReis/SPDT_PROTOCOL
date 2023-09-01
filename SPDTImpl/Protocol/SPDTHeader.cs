@@ -17,6 +17,8 @@ public sealed class SPDTHeader : ISPDTHeader
     public uint StreamID { get; private set; }
 
     public uint FragmentID { get; private set; }
+
+    public UInt24 PayloadLenght { get; private set; }
     #endregion
 
     #region FRAME MEMORY
@@ -52,6 +54,8 @@ public sealed class SPDTHeader : ISPDTHeader
             ReadStreamID(_HeaderMemoryData.Span);
         FragmentID = _SPDTGlobalObjects.SpdtProtocol.
             ReadFragmentID(_HeaderMemoryData.Span);
+        PayloadLenght = _SPDTGlobalObjects.SpdtProtocol.
+            ReadPayloadLenght(_HeaderMemoryData.Span);
     }
 
     public void ResetHeader()

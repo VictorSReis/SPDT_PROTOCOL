@@ -11,6 +11,7 @@ public sealed class SPDTProtocolHeaderReader : ISPDTProtocolHeaderReader
      * PACKET TYPE	   (8) BITS	                 [2]
      * STREAM ID	   (32) BITS	BIG-ENDIAN   [3-6]
      * FRAGMENT ID	   (32) BITS	BIG-ENDIAN   [7-10]
+     * PAYLOAD LENG	   (24) BITS	BIG-ENDIAN   [11-13]
      */
 
 
@@ -39,6 +40,13 @@ public sealed class SPDTProtocolHeaderReader : ISPDTProtocolHeaderReader
         (ReadOnlySpan<byte> pBufferHeader)
     {
         var Value = BitReader.ReadUInt32BigEndian(pBufferHeader, 7);
+        return Value;
+    }
+
+    public UInt24 ReadPayloadLenght
+        (ReadOnlySpan<byte> pBufferHeader)
+    {
+        var Value = BitReader.ReadUInt24BigEndian(pBufferHeader, 11);
         return Value;
     }
 }

@@ -10,6 +10,8 @@ public interface ISPDTFactory
 
     public ISPDTFrame CreateFrameObject();
 
+    public ISPDTMessage CreateMessageObject();
+
     public ISPDTStreamMessages CreateStreamMessages();
 
     public ISPDTStreamManager CreateStreamManager();

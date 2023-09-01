@@ -1,5 +1,6 @@
 ﻿using SPDTCore.Core;
 using SPDTCore.Core.Protocol;
+using SPDTSdk;
 
 namespace SPDTImpl.Protocol;
 
@@ -44,10 +45,8 @@ public sealed class SPDTMessage : ISPDTMessage
         //SET MEMORY OBJECT THIS MESSAGE
         _MemoryMessageObject = pBufferMessage;
 
-        //HEADER - 11 BYTES
-        //FRAME  - 4 + PAYLOAD.
-        var MemHeader = _MemoryMessageObject[..11];
-        var MemFrame = _MemoryMessageObject[11..];
+        var MemHeader = _MemoryMessageObject[..(SPDTConstants.SIZE_HEADER_OBJECT - 1)];
+        var MemFrame = _MemoryMessageObject[SPDTConstants.SIZE_HEADER_OBJECT..];
 
         //LOAD
         Header.LoadProtocolHeader(MemHeader);
