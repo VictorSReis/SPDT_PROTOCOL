@@ -16,6 +16,10 @@ public sealed class SPDTStream : ISPDTStream
     public ISPDTStreamStatistics StreamStatistics { get; private set; }
     #endregion
 
+    #region EVENTS
+    public event EventHandler OnNewMessageAvaileble;
+    #endregion
+
     #region STREAM MANAGER
     private ISPDTStreamManager _StreamManager;
     #endregion
@@ -76,6 +80,7 @@ public sealed class SPDTStream : ISPDTStream
         (object sender, ISPDTMessage e)
     {
         _StreamMessages.EnqueueMessage(e);
+        OnNewMessageAvaileble?.Invoke(this, null);
     }
 
     private void _StreamManager_OnResetStream(object sender, EventArgs e)

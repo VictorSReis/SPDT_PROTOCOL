@@ -6,9 +6,12 @@ namespace SPDTCore.Core.SPDT;
 /// </summary>
 public interface ISPDTCoreMessageCreator
 {
-    public Memory<byte> CreateMessage_CreateNewStreamEndpoint
+    public Memory<byte> CreateMessage_RequestNewStreamEndpoint
         (out UInt32 pOutStreamIDRequestCreate);
 
     public Memory<byte> CreateMessage_CreatedStreamSuccessfully
         (UInt32 pStreamID);
+
+    public Memory<byte> CreateMessage_Data
+        (UInt32 pStreamID, Memory<byte> PayloadFrameData);
 }

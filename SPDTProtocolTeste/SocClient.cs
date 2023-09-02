@@ -1,4 +1,5 @@
 ﻿using SPDTCore.Core.Readers;
+using System.Diagnostics;
 using System.Net.Sockets;
 
 namespace SPDTProtocolTeste;
@@ -6,7 +7,6 @@ namespace SPDTProtocolTeste;
 internal class SocClient
 {
     private TcpClient Client;
-    private NetworkStream StmClient;
     private ISPDTReaderStream SpdtReadStream;
     private Task _TaskCheckAvailebleData;
 
@@ -32,8 +32,6 @@ internal class SocClient
             goto Done;
         }
 
-        StmClient = Client.GetStream();
-
     Done:;
     }
 
@@ -42,12 +40,12 @@ internal class SocClient
         if (Client is null)
             return;
 
-        StmClient.Write(pBuffer.Span);
+        Client.Client.Send(pBuffer.Span);
     }
 
     public bool Receiver(out Memory<byte> pBuffer)
     {
-        return SpdtReadStream.Read(StmClient, out pBuffer);
+        return SpdtReadStream.ReadFromSocket(Client.Client, out pBuffer);
     }
 
     private void TaskCheckAvailebleData()
@@ -62,9 +60,9 @@ internal class SocClient
                 Thread.Sleep(10);
             }
         }
-        catch (Exception)
+        catch (Exception Er)
         {
-
+            Debug.WriteLine($"DEBUG CLIENT SOCKET: Falha na task de recebimento de dados: {Er.Message}");
         }
     }
 }

@@ -8,6 +8,7 @@ namespace SPDTCore.Core.Protocol;
 /// </summary>
 public interface ISPDTStream
 {
+    #region PROPERTIES
     /// <summary>
     /// Contém o ID do fluxo.
     /// </summary>
@@ -27,6 +28,12 @@ public interface ISPDTStream
     /// Contém informações de estatisticas sobre o fluxo atual.
     /// </summary>
     public ISPDTStreamStatistics StreamStatistics { get; }
+    #endregion
+
+    #region EVENTS
+    public event EventHandler OnNewMessageAvaileble;
+    #endregion
+
 
 
     /// <summary>

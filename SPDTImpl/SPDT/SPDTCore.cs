@@ -183,7 +183,7 @@ public sealed class SPDTCore: ISPDTCore
     private void _SpdtCoreController_OnNotifyProcessInputStreamCreatedSuccessfully
         (object sender, uint e)
     {
-        Debug.WriteLine($"DEBUG: Endpoint notify stream created successfully: {e}");
+        Debug.WriteLine($"DEBUG: Endpoint notify created stream id: {e}");
 
         try
         {
@@ -197,6 +197,9 @@ public sealed class SPDTCore: ISPDTCore
             //UPDATE STATE
             NewStreamItem.SpdtStreamManager.InvokeUpdateStreamState
                 (SPDTSdk.SPDTStreamState.STREAM_OPEN);
+
+            //Notify user for open stream.
+            OnNewOpenStream?.Invoke(this, NewStreamItem.SpdtStream);
         }
         catch (Exception Er)
         {

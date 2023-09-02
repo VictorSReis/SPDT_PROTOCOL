@@ -24,7 +24,7 @@ internal class User
 
     public Memory<byte> CreateStreamMessageTesteStream()
     {
-        var Data = MessageCreator.CreateMessage_CreateNewStreamEndpoint(out UInt32 StreamPending);
+        var Data = MessageCreator.CreateMessage_RequestNewStreamEndpoint(out UInt32 StreamPending);
         return Data;
     }
 
