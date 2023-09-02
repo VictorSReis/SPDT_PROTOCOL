@@ -124,7 +124,7 @@ public partial class UserSocketForm : Form
         SocClient.Send(e);
     }
 
-    private void Protocol_OnNewOpenStream(object sender, SPDTCore.Core.Protocol.ISPDTStream e)
+    private void Protocol_OnNewOpenStream(object sender, ISPDTStream e)
     {
         if (e.StreamID == StreamID1)
         {
