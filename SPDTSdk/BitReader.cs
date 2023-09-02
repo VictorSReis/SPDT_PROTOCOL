@@ -9,7 +9,7 @@ public static class BitReader
         UInt16 Valor;
 
         ReadOnlySpan<byte> Temp = pMemory.Slice(StartIndex, 2);// 2 BYTES BIG-ENDIAN
-        Valor = (UInt16)((Temp[1] << 8) | (Temp[2] & 0xFF));
+        Valor = (UInt16)((Temp[0] << 8) | (Temp[1] & 0xFF));
 
         return Valor;
     }

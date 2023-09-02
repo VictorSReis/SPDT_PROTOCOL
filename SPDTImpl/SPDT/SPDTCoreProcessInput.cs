@@ -112,7 +112,7 @@ public sealed class SPDTCoreProcessInput : ISPDTCoreProcessInput
 
         try
         {
-            pMessage.AssembleMessage(pObjectDataAssemble, CheckFramePayloadPresent(ref pMessage));
+            pMessage.AssembleMessage(pObjectDataAssemble);
             Result = true;
         }
         catch (Exception)
@@ -121,11 +121,6 @@ public sealed class SPDTCoreProcessInput : ISPDTCoreProcessInput
         }
 
         return Result;
-    }
-
-    private static bool CheckFramePayloadPresent(ref ISPDTMessage pSptdMessage)
-    {
-        return pSptdMessage.Header.PacketType == SPDTSdk.SPDTPacketType.PACKET_TP_DATA;
     }
     #endregion
 }

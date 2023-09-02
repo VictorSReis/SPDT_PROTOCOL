@@ -13,16 +13,4 @@ public partial class SPDTProtocolTesteForm : Form
     {
 
     }
-
-    private void Btn_CreateSPDTCore_Click(object sender, EventArgs e)
-    {
-        UserProtocol1.CreateProtocol(Userprotocol2);
-        Userprotocol2.CreateProtocol(UserProtocol1);
-    }
-
-    private void Btn_CreateStreamOnUser1_Click(object sender, EventArgs e)
-    {
-        var Data = UserProtocol1.CreateStreamMessageTesteStream();
-        Userprotocol2.SimulateSendMessage(Data);
-    }
 }

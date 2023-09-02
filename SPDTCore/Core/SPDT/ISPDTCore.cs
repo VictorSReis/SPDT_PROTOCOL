@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SPDTCore.Core.Protocol;
+using SPDTCore.Core.Readers;
+using System;
 
 namespace SPDTCore.Core.SPDT;
 
@@ -7,6 +9,9 @@ namespace SPDTCore.Core.SPDT;
 /// </summary>
 public interface ISPDTCore
 {
+    public event EventHandler<ISPDTStream> OnNewOpenStream;
+
+
     public void CreateResources();
 
     public void Initialize();
@@ -16,4 +21,6 @@ public interface ISPDTCore
     public ISPDTCoreMessageCreator GetMessageCreator();
 
     public ISPDTCoreForwardEndpoint GetForwardEndpoint();
+
+    public ISPDTReaderStream GetReaderStream();
 }

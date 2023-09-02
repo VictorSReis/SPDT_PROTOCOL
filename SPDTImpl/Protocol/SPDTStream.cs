@@ -80,7 +80,9 @@ public sealed class SPDTStream : ISPDTStream
 
     private void _StreamManager_OnResetStream(object sender, EventArgs e)
     {
-        throw new NotImplementedException();
+        StreamID = 0;
+        StreamGuid = Guid.Empty;
+        StreamState = SPDTStreamState.STREAM_RESET;
     }
     #endregion
 }

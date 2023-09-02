@@ -2,9 +2,11 @@
 using SPDTCore.Core.Factory;
 using SPDTCore.Core.Handles;
 using SPDTCore.Core.Protocol;
+using SPDTCore.Core.Readers;
 using SPDTCore.Core.SPDT;
 using SPDTImpl.Factory;
 using SPDTImpl.Protocol;
+using SPDTImpl.Readers;
 using System.Diagnostics;
 
 namespace SPDTImpl.SPDT;
@@ -14,8 +16,12 @@ namespace SPDTImpl.SPDT;
 /// </summary>
 public sealed class SPDTCore: ISPDTCore
 {
-	#region PRIVATE RESOURCES
-	private ISPDTGlobalObjects _SpdtGlobalObjects;
+    #region EVENT
+    public event EventHandler<ISPDTStream> OnNewOpenStream;
+    #endregion
+
+    #region PRIVATE RESOURCES
+    private ISPDTGlobalObjects _SpdtGlobalObjects;
 	private ISPDTFactory _SpdtFactory;
 	private ISPDTProtocol _SpdtProtocol;
 	private ISPDTCoreStreams _SpdtCoreStreams;
@@ -23,6 +29,7 @@ public sealed class SPDTCore: ISPDTCore
 	private ISPDTCoreController _SpdtCoreController;
     private ISPDTCoreProcessPacketType _SpdtProcessPacketType;
     private ISPDTCoreMessageCreator _SpdtCoreMessageCreator;
+    private ISPDTReaderStream _SpdtReaderStream;
     #endregion
 
     #region PROCESS
@@ -56,6 +63,7 @@ public sealed class SPDTCore: ISPDTCore
         _SpdtProcessPacketType = new SPDTCoreProcessPacketType(_SpdtCoreController);
         _SpdtCoreMessageCreator = new SPDTCoreMessageCreator(_SpdtGlobalObjects, _SpdtStreamGenerateID);
         _SpdtCoreForwardEndpoint = new SPDTCoreForwardEndpoint(ref _SpdtNotifyForwardMessageHandle);
+        _SpdtReaderStream = new SPDTReaderStream(_SpdtProtocol);
 
         //CREATE PROCESS INPUT
         _SpdtCoreForwarderMessage = new SPDTCoreForwarderMessage(_SpdtCoreStreams);
@@ -95,6 +103,9 @@ public sealed class SPDTCore: ISPDTCore
     {
         return _SpdtCoreForwardEndpoint;
     }
+
+    public ISPDTReaderStream GetReaderStream()
+        => _SpdtReaderStream;
     #endregion
 
     #region EVENTS CORE CONTROLLER
@@ -159,6 +170,9 @@ public sealed class SPDTCore: ISPDTCore
 
             //Notify Endpoint for created stream.
             PrivateNotifyEndpointStreamCreated(e);
+
+            //Notify user for open stream.
+            OnNewOpenStream?.Invoke(this, NewStreamItem.SpdtStream);
         }
         catch (Exception Er)
         {
