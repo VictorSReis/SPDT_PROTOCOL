@@ -1,7 +1,7 @@
 ﻿namespace SPDTCore.Core.SPDT;
 
 /// <summary>
-/// Interface utilizada pelo cliente para receber mensagens que devem ser encaminhadas para o endpoint.
+/// Interface utilizada pelo servidor para comunicar o cliente que uma mensagem deve ser encaminhada para o endpoint.
 /// </summary>
 public interface ISPDTCoreForwardEndpoint
 {

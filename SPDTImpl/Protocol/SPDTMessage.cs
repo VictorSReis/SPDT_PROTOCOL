@@ -50,7 +50,7 @@ public sealed class SPDTMessage : ISPDTMessage
         Header.LoadProtocolHeader(MemHeader);
 
         //WRITE FRAME IF PRESENT
-        if (Header.PacketType == SPDTPacketType.PACKET_TP_DATA)
+        if (Header.PayloadLenght > 0)
         {
             var MemFrame = _MemoryMessageObject[SPDTConstants.SIZE_HEADER_OBJECT..];
             Frame.LoadFrameProtocol(MemFrame);

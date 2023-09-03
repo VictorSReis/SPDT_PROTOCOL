@@ -36,6 +36,7 @@
             Lst_ResponseServer = new ListBox();
             Btn_SendStreamData1 = new Button();
             Btn_SendStreamData2 = new Button();
+            Btn_SendMalformedPkt = new Button();
             SuspendLayout();
             // 
             // Btn_Connect
@@ -54,7 +55,7 @@
             LabelStream1.BackColor = Color.Transparent;
             LabelStream1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
             LabelStream1.ForeColor = Color.Firebrick;
-            LabelStream1.Location = new Point(248, 48);
+            LabelStream1.Location = new Point(492, 45);
             LabelStream1.Name = "LabelStream1";
             LabelStream1.Size = new Size(85, 15);
             LabelStream1.TabIndex = 1;
@@ -65,7 +66,7 @@
             LabelStream2.AutoSize = true;
             LabelStream2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
             LabelStream2.ForeColor = Color.Firebrick;
-            LabelStream2.Location = new Point(248, 72);
+            LabelStream2.Location = new Point(492, 69);
             LabelStream2.Name = "LabelStream2";
             LabelStream2.Size = new Size(85, 15);
             LabelStream2.TabIndex = 2;
@@ -95,9 +96,9 @@
             // 
             Lst_ResponseServer.FormattingEnabled = true;
             Lst_ResponseServer.ItemHeight = 15;
-            Lst_ResponseServer.Location = new Point(248, 90);
+            Lst_ResponseServer.Location = new Point(492, 87);
             Lst_ResponseServer.Name = "Lst_ResponseServer";
-            Lst_ResponseServer.Size = new Size(283, 109);
+            Lst_ResponseServer.Size = new Size(363, 109);
             Lst_ResponseServer.TabIndex = 5;
             // 
             // Btn_SendStreamData1
@@ -120,11 +121,22 @@
             Btn_SendStreamData2.UseVisualStyleBackColor = true;
             Btn_SendStreamData2.Click += Btn_SendStreamData2_Click;
             // 
+            // Btn_SendMalformedPkt
+            // 
+            Btn_SendMalformedPkt.Location = new Point(232, 98);
+            Btn_SendMalformedPkt.Name = "Btn_SendMalformedPkt";
+            Btn_SendMalformedPkt.Size = new Size(104, 40);
+            Btn_SendMalformedPkt.TabIndex = 8;
+            Btn_SendMalformedPkt.Text = "Send Malformed Packet";
+            Btn_SendMalformedPkt.UseVisualStyleBackColor = true;
+            Btn_SendMalformedPkt.Click += Btn_SendMalformedPkt_Click;
+            // 
             // UserSocketForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(543, 208);
+            ClientSize = new Size(867, 208);
+            Controls.Add(Btn_SendMalformedPkt);
             Controls.Add(Btn_SendStreamData2);
             Controls.Add(Btn_SendStreamData1);
             Controls.Add(Lst_ResponseServer);
@@ -150,5 +162,6 @@
         private ListBox Lst_ResponseServer;
         private Button Btn_SendStreamData1;
         private Button Btn_SendStreamData2;
+        private Button Btn_SendMalformedPkt;
     }
 }

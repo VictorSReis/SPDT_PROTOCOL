@@ -78,7 +78,7 @@ public partial class SPDTProtocolTesteForm : Form
         Debug.WriteLine($"Spdt Stream {SpdtStream.StreamID}: {StringMensagem}");
 
         Memory<byte> bt = Encoding.UTF8.GetBytes($"Olá Fluxo '{SpdtStream.StreamID}'!!");
-        var Pacote = MessageCreator.CreateMessage_Data(SpdtStream.StreamID, bt);
+        var Pacote = MessageCreator.CreateMessageData(SpdtStream.StreamID, bt);
 
         Servidor.SendToClient(Pacote);
     }

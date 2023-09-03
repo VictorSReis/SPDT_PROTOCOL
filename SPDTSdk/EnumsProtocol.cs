@@ -1,5 +1,8 @@
 ﻿namespace SPDTSdk;
 
+/// <summary>
+/// Enumera as possiveis versões do protocolo.
+/// </summary>
 public enum SPDTProtocolVersion : UInt16
 {
     /// <summary>
@@ -13,6 +16,9 @@ public enum SPDTProtocolVersion : UInt16
     Unknown = UInt16.MaxValue
 }
 
+/// <summary>
+/// Enumera o tipo do pacote enviado/recebido.
+/// </summary>
 public enum SPDTPacketType : byte
 {
     /// <summary>
@@ -24,11 +30,6 @@ public enum SPDTPacketType : byte
     /// Pacote informando a criação de um fluxo.
     /// </summary>
     PACKET_TP_CREATE_STREAM,
-
-    /// <summary>
-    /// Pacote informando que o fluxo foi criado com sucesso.
-    /// </summary>
-    PACKET_TP_STREAM_CREATED_SUCESSFULLY,
 
     /// <summary>
     /// Pacote solicitando o fechamento do fluxo.
@@ -46,6 +47,12 @@ public enum SPDTPacketType : byte
     PACKET_TP_PING_STREAM,
 
     /// <summary>
+    /// Pacote utilizado para informar o endpoint sobre erros. 
+    /// Este tipo deve ser enviado com dados de payload.
+    /// </summary>
+    PACKET_TP_ERROR,
+
+    /// <summary>
     /// Pacote de ping para avaliar a conexão com o endpoint final.
     /// </summary>
     PACKET_TP_PING = 0xFE,
@@ -56,6 +63,9 @@ public enum SPDTPacketType : byte
     Unknown = byte.MaxValue
 }
 
+/// <summary>
+/// Enumera os tipos de frame possiveis.
+/// </summary>
 public enum SPDTFrameType: byte
 {
     /// <summary>
@@ -77,4 +87,29 @@ public enum SPDTFrameType: byte
     /// O tipo do frame é desconhecido.
     /// </summary>
     Unknown = byte.MaxValue
+}
+
+/// <summary>
+/// Enumera os possiveis erros durante a transmissão e recebimento de dados.
+/// </summary>
+public enum SPDTError : UInt16
+{
+    /// <summary>
+    /// O pacote informado tem uma estrutura inválida.
+    /// </summary>
+    MALFORMED_PACKET,
+
+    /// <summary>
+    /// O fluxo informado no pacote não existe.
+    /// </summary>
+    STREAM_DOES_NOT_EXIST,
+
+
+
+
+
+    /// <summary>
+    /// Ocorreu um erro interno ao processar alguma solicitação.
+    /// </summary>
+    INTERNAL_ERROR = UInt16.MaxValue
 }

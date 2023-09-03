@@ -35,6 +35,13 @@ public interface ISPDTCoreStreams
     public void RegisterStream(ISPDTCoreStreamItem pStreamItem);
 
     /// <summary>
+    /// Verifica se uma fluxo já está registrado.
+    /// </summary>
+    /// <param name="pStreamID">O Id para o fluxo a ser verificado.</param>
+    /// <returns></returns>
+    public bool StreamIsRegistred(UInt32 pStreamID);
+
+    /// <summary>
     /// Retorna um fluxo com base no seu ID.
     /// </summary>
     /// <param name="pStreamID">O ID do fluxo a ser retornado.</param>

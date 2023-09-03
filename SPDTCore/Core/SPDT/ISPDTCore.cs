@@ -10,13 +10,22 @@ namespace SPDTCore.Core.SPDT;
 public interface ISPDTCore
 {
     public event EventHandler<ISPDTStream> OnNewOpenStream;
-
+    public event EventHandler<ISPDTMessage> OnNewGlobalMessage;
 
     public void CreateResources();
 
     public void Initialize();
 
     public void ProcessInput(Memory<byte> pSpdtPacket);
+
+    /// <summary>
+    /// Método responsável por requisitar a criação de um novo fluxo para o endpoint.
+    /// O chamado deve registrar o ID retornado por esse método.
+    /// </summary>
+    /// <returns>Retorna o StreamID para o fluxo que será aberto.</returns>
+    public UInt32 RequestStreamCreation();
+
+    public void RegisterStreamIDRequested(UInt32 pStreamID);
 
     public ISPDTCoreMessageCreator GetMessageCreator();
 

@@ -1,27 +1,37 @@
 ﻿using SPDTCore.Core.Protocol;
+using SPDTSdk;
 
 namespace SPDTCore.Core.SPDT;
 
+/// <summary>
+/// Interface utilizada internamente para receber notificações sobre processos internos.
+/// </summary>
 public interface ISPDTCoreController
 {
-    //NOTIFY
-    public event EventHandler OnNotifyProcessInputNewData;
-    public event EventHandler<ISPDTMessage> OnNotifyProcessInputNewMessage;
-    public event EventHandler OnNotifyProcessInputMalformedData;
-    public event EventHandler<UInt32> OnNotifyProcessInputCreateNewStream;
-    public event EventHandler<UInt32> OnNotifyProcessInputStreamCreatedSuccessfully;
-    public event EventHandler<UInt32> OnNotifyProcessInputResetStream;
-    public event EventHandler<UInt32> OnNotifyProcessInputCloseStream;
-    public event EventHandler<UInt32> OnNotifyProcessInputPingStream;
+    #region EVENTS
+    public event EventHandler<int> OnNotifyNewMessageDataReceived;
+    public event EventHandler<ISPDTMessage> OnNotifyNewPublicMessage;
+    public event EventHandler<NotifyErrorObject> OnNotifyError;
+    public event EventHandler<UInt32> OnNotifyCreateNewStream;
+    public event EventHandler<UInt32> OnNotifyResetStream;
+    public event EventHandler<UInt32> OnNotifyCloseStream;
+    public event EventHandler<UInt32> OnNotifyPingStream;
+    #endregion
 
-
-    //NOTIFY
-    public void Invoke_ProcessInputNewData();
-    public void Invoke_ProcessInputNewMessage(ISPDTMessage pMessage);
-    public void Invoke_ProcessInputMalformedData();
-    public void Invoke_ProcessInputCreateNewStream(UInt32 pStreamID);
-    public void Invoke_ProcessInputStreamCreatedSuccessfully(UInt32 pStreamID);
-    public void Invoke_ProcessInputResetStream(UInt32 pStreamID);
-    public void Invoke_ProcessInputCloseStream(UInt32 pStreamID);
-    public void Invoke_ProcessInputPingStream(UInt32 pStreamID);
+    #region METHODS FOR INVOKE EVENTS
+    public void InvokeNotifyNewMessageDataReceived
+        (int pCountBytesReceived);
+    public void InvokeNotifyNewPublicMessage
+        (ISPDTMessage pMessage);
+    public void InvokeNotifyError
+        (NotifyErrorObject pSpdtError);
+    public void InvokeNotifyCreateNewStream
+        (UInt32 pStreamID);
+    public void InvokeNotifyResetStream
+        (UInt32 pStreamID);
+    public void InvokeNotifyCloseStream
+        (UInt32 pStreamID);
+    public void InvokeNotifyPingStream
+        (UInt32 pStreamID);
+    #endregion
 }

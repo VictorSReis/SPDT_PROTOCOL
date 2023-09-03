@@ -65,13 +65,15 @@ public sealed class SPDTCoreStreams : ISPDTCoreStreams
         return _CollectionStreams is null ? (ushort)0 : (ushort)_CollectionStreams.Count;
     }
 
-    public ISPDTStream GetStreamID(UInt32 pStreamID)
+    public ISPDTStream GetStreamID
+        (UInt32 pStreamID)
     {
         PrivateGetStreamByID(pStreamID, out var OutStream);
         return OutStream;
     }
 
-    public ISPDTStreamManager GetStreamManagerByID(UInt32 pStreamID)
+    public ISPDTStreamManager GetStreamManagerByID
+        (UInt32 pStreamID)
     {
         PrivateGetStreamManagerByID(pStreamID, out var OutStreamManager);
         return OutStreamManager;
@@ -81,6 +83,12 @@ public sealed class SPDTCoreStreams : ISPDTCoreStreams
         (ISPDTCoreStreamItem pStreamItem)
     {
         PrivateRegisterNewStreamItem(pStreamItem);
+    }
+
+    public bool StreamIsRegistred
+        (UInt32 pStreamID)
+    {
+        return PrivateExistStreamID(pStreamID);
     }
     #endregion
 
@@ -118,5 +126,8 @@ public sealed class SPDTCoreStreams : ISPDTCoreStreams
 
         return true;
     }
+
+    private bool PrivateExistStreamID(UInt32 pStreamID)
+        =>_CollectionStreams.Exists(x=> x.StreamID == pStreamID);
     #endregion
 }

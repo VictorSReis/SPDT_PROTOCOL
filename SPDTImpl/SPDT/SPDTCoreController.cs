@@ -1,65 +1,63 @@
 ﻿using SPDTCore.Core.Protocol;
 using SPDTCore.Core.SPDT;
+using SPDTSdk;
 
 namespace SPDTImpl.SPDT;
 
-internal struct SPDTCoreController : ISPDTCoreController
+
+internal sealed class SPDTCoreController : ISPDTCoreController
 {
     #region EVENTS
-    public event EventHandler OnNotifyProcessInputNewData;
-    public event EventHandler<ISPDTMessage> OnNotifyProcessInputNewMessage;
-    public event EventHandler OnNotifyProcessInputMalformedData;
-    public event EventHandler<uint> OnNotifyProcessInputCreateNewStream;
-    public event EventHandler<uint> OnNotifyProcessInputStreamCreatedSuccessfully;
-    public event EventHandler<uint> OnNotifyProcessInputResetStream;
-    public event EventHandler<uint> OnNotifyProcessInputCloseStream;
-    public event EventHandler<uint> OnNotifyProcessInputPingStream;
+    public event EventHandler<int> OnNotifyNewMessageDataReceived;
+    public event EventHandler<ISPDTMessage> OnNotifyNewPublicMessage;
+    public event EventHandler<NotifyErrorObject> OnNotifyError;
+    public event EventHandler<UInt32> OnNotifyCreateNewStream;
+    public event EventHandler<UInt32> OnNotifyResetStream;
+    public event EventHandler<UInt32> OnNotifyCloseStream;
+    public event EventHandler<UInt32> OnNotifyPingStream;
     #endregion
 
     #region ISPDTCoreController
-    public void Invoke_ProcessInputMalformedData()
+    public void InvokeNotifyError
+        (NotifyErrorObject pSpdtError)
     {
-        OnNotifyProcessInputMalformedData?.Invoke(this, null);
+        OnNotifyError?.Invoke(this, pSpdtError);
     }
 
-    public void Invoke_ProcessInputNewData()
+    public void InvokeNotifyNewMessageDataReceived
+        (int pCountBytesReceived)
     {
-        OnNotifyProcessInputNewData?.Invoke(this, null);
+        OnNotifyNewMessageDataReceived?.Invoke(this, pCountBytesReceived);
     }
 
-    public void Invoke_ProcessInputNewMessage
+    public void InvokeNotifyNewPublicMessage
         (ISPDTMessage pMessage)
     {
-        OnNotifyProcessInputNewMessage?.Invoke(this, pMessage);
+        OnNotifyNewPublicMessage?.Invoke(this, pMessage);
     }
 
-    public void Invoke_ProcessInputCreateNewStream
+    public void InvokeNotifyCreateNewStream
         (uint pStreamID)
     {
-        OnNotifyProcessInputCreateNewStream?.Invoke(this, pStreamID);
+        OnNotifyCreateNewStream?.Invoke(this, pStreamID);
     }
 
-    public void Invoke_ProcessInputStreamCreatedSuccessfully(uint pStreamID)
-    {
-       OnNotifyProcessInputStreamCreatedSuccessfully?.Invoke(this, pStreamID);
-    }
-
-    public void Invoke_ProcessInputCloseStream
+    public void InvokeNotifyCloseStream
         (uint pStreamID)
     {
-        OnNotifyProcessInputCloseStream?.Invoke(this, pStreamID);
+        OnNotifyCloseStream?.Invoke(this, pStreamID);
     }
 
-    public void Invoke_ProcessInputPingStream
+    public void InvokeNotifyPingStream
         (uint pStreamID)
     {
-        OnNotifyProcessInputPingStream?.Invoke(this, pStreamID);
+        OnNotifyPingStream?.Invoke(this, pStreamID);
     }
 
-    public void Invoke_ProcessInputResetStream
+    public void InvokeNotifyResetStream
         (uint pStreamID)
     {
-        OnNotifyProcessInputResetStream?.Invoke(this, pStreamID);
+        OnNotifyResetStream?.Invoke(this, pStreamID);
     }
     #endregion
 }

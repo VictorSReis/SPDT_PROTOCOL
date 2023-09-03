@@ -48,12 +48,19 @@ public sealed class SPDTHeader : ISPDTHeader
         //LOAD PROPERTIES.
         ProtocolVersion = _SPDTGlobalObjects.SpdtProtocol.
             ReadProtocolVersion(_HeaderMemoryData.Span);
+
         PacketType = _SPDTGlobalObjects.SpdtProtocol.
             ReadPacketType(_HeaderMemoryData.Span);
+        bool ValidatePacketType = _SPDTGlobalObjects.SpdtValidator.ValidatePacketType((byte)PacketType);
+        if (!ValidatePacketType)
+            throw new Exception("MALFORMED PACKET");
+
         StreamID = _SPDTGlobalObjects.SpdtProtocol.
             ReadStreamID(_HeaderMemoryData.Span);
+
         FragmentID = _SPDTGlobalObjects.SpdtProtocol.
             ReadFragmentID(_HeaderMemoryData.Span);
+
         PayloadLenght = _SPDTGlobalObjects.SpdtProtocol.
             ReadPayloadLenght(_HeaderMemoryData.Span);
     }

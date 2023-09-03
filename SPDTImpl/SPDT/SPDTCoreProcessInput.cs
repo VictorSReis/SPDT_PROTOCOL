@@ -1,6 +1,7 @@
 ﻿using SPDTCore.Core;
 using SPDTCore.Core.Protocol;
 using SPDTCore.Core.SPDT;
+using SPDTSdk;
 using System.Diagnostics;
 
 namespace SPDTImpl.SPDT;
@@ -36,7 +37,7 @@ public sealed class SPDTCoreProcessInput : ISPDTCoreProcessInput
         (Memory<byte> pSPDTPacket)
     {
         _QueueMemorySpdt.Enqueue(pSPDTPacket);
-        _SpdtCoreController.Invoke_ProcessInputNewData();
+        _SpdtCoreController.InvokeNotifyNewMessageDataReceived(pSPDTPacket.Length);
     }
 
     public void Start()
@@ -73,7 +74,9 @@ public sealed class SPDTCoreProcessInput : ISPDTCoreProcessInput
                 (ref NewSpdtMessageObject, PacketForProcess);
             if (!ResultAssembleMsg)
             {
-                _SpdtCoreController.Invoke_ProcessInputMalformedData();
+                //ERROR: MALFORMED PACKET
+
+                _SpdtCoreController.InvokeNotifyError(new NotifyErrorObject(SPDTError.MALFORMED_PACKET, 0));
                 goto Done;
             }
 
