@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -59,7 +60,6 @@ public partial class UserSocketForm : Form
         SocClient = new SocClient(ReaderStream);
         SocClient.OnNewAvailebleData += SocClient_OnNewAvailebleData;
         SocClient.CreateConnection("127.0.0.1", 50564);
-        CheckAvailebleMessageInStream();
         MessageBox.Show("Conexão estabelecida");
     }
 
@@ -140,32 +140,6 @@ public partial class UserSocketForm : Form
 
     }
 
-    private void CheckAvailebleMessageInStream()
-    {
-        Task.Factory.StartNew(() =>
-        {
-            bool StmContainMessage = false;
-            while (true)
-            {
-                if (Stream1 is not null)
-                {
-                    StmContainMessage = Stream1.AvailebleData();
-                    if (StmContainMessage)
-                        ProcessMessageStream(Stream1.GetSPDTMessage());
-                }
-
-                if (Stream2 is not null)
-                {
-                    StmContainMessage = Stream2.AvailebleData();
-                    if (StmContainMessage)
-                        ProcessMessageStream(Stream2.GetSPDTMessage());
-                }
-
-                Thread.Sleep(10);
-            }
-        });
-    }
-
     private void ForwardEndpoint_OnNewMessageForward(object sender, Memory<byte> e)
     {
         SocClient.Send(e);
@@ -175,14 +149,26 @@ public partial class UserSocketForm : Form
     {
         if (e.StreamID == StreamID1)
         {
+            e.SetNameStream("NOTIFICATIONS_STM");
             Stream1 = e;
+            Stream1.OnNewMessageAvaileble += SpdtStream_OnNewMessageAvaileble;
             UpdateLabelStream(true);
         }
         else
         {
+            e.SetNameStream("FOLDER_MANAGER");
             Stream2 = e;
+            Stream2.OnNewMessageAvaileble += SpdtStream_OnNewMessageAvaileble;
             UpdateLabelStream(false);
         }
+    }
+
+    private void SpdtStream_OnNewMessageAvaileble
+        (object sender, EventArgs e)
+    {
+        ISPDTStream Stm = sender as ISPDTStream;
+        Debug.WriteLine($"DEBUG: Stream '{Stm.StreamName}' availeble message!");
+        ProcessMessageStream(Stm.GetSPDTMessage());
     }
 
     private void ProcessMessageStream(ISPDTMessage pNewMessage)
@@ -233,6 +219,5 @@ public partial class UserSocketForm : Form
             pAction.Invoke();
         }
     }
-
     #endregion
 }

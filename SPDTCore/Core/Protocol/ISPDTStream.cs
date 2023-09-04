@@ -9,6 +9,7 @@ namespace SPDTCore.Core.Protocol;
 public interface ISPDTStream
 {
     #region PROPERTIES
+
     /// <summary>
     /// Contém o ID do fluxo.
     /// </summary>
@@ -18,6 +19,11 @@ public interface ISPDTStream
     /// Um identificador do objeto atual.
     /// </summary>
     public Guid StreamGuid { get; }
+
+    /// <summary>
+    /// Um nome definido pelo usuário para o fluxo.
+    /// </summary>
+    public string StreamName { get; }
 
     /// <summary>
     /// Informa o esatado atual do fluxo.
@@ -47,4 +53,10 @@ public interface ISPDTStream
     /// </summary>
     /// <returns></returns>
     public ISPDTMessage GetSPDTMessage();
+
+    /// <summary>
+    /// Define um nome para este fluxo.
+    /// </summary>
+    /// <param name="pName"></param>
+    public void SetNameStream(string pName);
 }

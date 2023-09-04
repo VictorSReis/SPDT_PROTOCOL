@@ -11,9 +11,12 @@ public sealed class SPDTStream : ISPDTStream
 
     public Guid StreamGuid { get; private set; }
 
+    public string StreamName { get; private set; }
+
     public SPDTStreamState StreamState { get; private set; }
 
     public ISPDTStreamStatistics StreamStatistics { get; private set; }
+
     #endregion
 
     #region EVENTS
@@ -41,7 +44,7 @@ public sealed class SPDTStream : ISPDTStream
         _StreamManager.OnSetGuidStream += StreamManager_OnSetGuidStream;
         _StreamManager.OnUpdateStreamState += StreamManager_OnUpdateStreamState;
         _StreamManager.OnNewMessage += StreamManager_OnNewMessage;
-        _StreamManager.OnResetStream += _StreamManager_OnResetStream;
+        _StreamManager.OnResetStream += StreamManager_OnResetStream;
     }
     #endregion
 
@@ -54,6 +57,12 @@ public sealed class SPDTStream : ISPDTStream
     public ISPDTMessage GetSPDTMessage()
     {
         return _StreamMessages.GetNextMessage();
+    }
+
+    public void SetNameStream(string pName)
+    {
+        if(String.IsNullOrEmpty(StreamName))
+            StreamName = pName;
     }
     #endregion
 
@@ -83,11 +92,13 @@ public sealed class SPDTStream : ISPDTStream
         OnNewMessageAvaileble?.Invoke(this, null);
     }
 
-    private void _StreamManager_OnResetStream(object sender, EventArgs e)
+    private void StreamManager_OnResetStream
+        (object sender, EventArgs e)
     {
         StreamID = 0;
         StreamGuid = Guid.Empty;
         StreamState = SPDTStreamState.STREAM_RESET;
+        StreamName = String.Empty;
     }
     #endregion
 }
